@@ -62,7 +62,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "export NODE_OPTIONS=--openssl-legacy-provider && react-scripts build",
     "postbuild": "mkdirp ../priv/static && cpx \"./build/**\" \"../priv/static\" --clean",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

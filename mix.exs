@@ -53,7 +53,7 @@ defmodule ChatApi.MixProject do
       {:phoenix, "~> 1.5.5"},
       {:phoenix_ecto, "~> 4.1"},
       {:ecto_sql, "~> 3.4"},
-      {:postgrex, ">= 0.0.0"},
+      {:postgrex, ">=  0.15.8"},
       {:phoenix_live_dashboard, "~> 0.2.0"},
       {:telemetry_metrics, "~> 0.4"},
       {:telemetry_poller, "~> 0.4"},
@@ -80,7 +80,7 @@ defmodule ChatApi.MixProject do
       {:floki, "~> 0.30.0"},
       {:paginator, "~> 1.0.3"},
       {:phoenix_pubsub_redis, "~> 3.0.0"},
-      {:appsignal_phoenix, "~> 2.0.0"},
+      {:appsignal_phoenix, "~> 2.3.4"},
       {:earmark, "~> 1.4.15"},
       {:sweet_xml, "~> 0.7.1"},
       # TODO: just copy code over?

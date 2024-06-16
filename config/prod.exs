@@ -19,6 +19,7 @@ config :chat_api, ChatApi.Repo,
   url: database_url,
   show_sensitive_data_on_connection_error: true,
   socket_options: [:inet],
+  check_origin: false,
   pool_size: pool_size
 
-config :chat_api, ChatApiWeb.Endpoint, force_ssl: [rewrite_on: [:x_forwarded_proto], host: nil]
+config :chat_api, ChatApiWeb.Endpoint, force_ssl: false# [rewrite_on: [:x_forwarded_proto], host: nil]

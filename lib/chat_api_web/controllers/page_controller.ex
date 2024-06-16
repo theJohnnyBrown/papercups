@@ -36,6 +36,7 @@ defmodule ChatApiWeb.PageController do
       REACT_APP_ADMIN_INBOX_ID:
         System.get_env("REACT_APP_ADMIN_INBOX_ID", "1c792b5e-4be9-4e51-98a9-5648311eb398"),
       REACT_APP_GITHUB_APP_NAME: System.get_env("REACT_APP_GITHUB_APP_NAME", "papercups-io"),
+      REACT_APP_IFRAME_URL: System.get_env("REACT_APP_IFRAME_URL", "window.papercups.io"),
 
       # Shared with backend (none of these should include API keys/secrets!)
       # NB: we prefix everything with `REACT_APP_` so we can override these more easily during development

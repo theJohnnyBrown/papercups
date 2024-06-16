@@ -19,6 +19,13 @@ defmodule ChatApiWeb.Endpoint do
 
   socket("/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]])
 
+plug(Corsica,
+    origins: "*",
+    allow_credentials: true,
+    allow_headers: ["Content-Type", "Authorization"],
+    log: [rejected: :error, invalid: :warn, accepted: :debug]
+  )
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phx.digest
@@ -56,21 +63,6 @@ defmodule ChatApiWeb.Endpoint do
   plug(Plug.MethodOverride)
   plug(Plug.Head)
   plug(Plug.Session, @session_options)
-
-  plug(Corsica,
-    # FIXME: what's the best way to handle this if we want other websites to
-    # be allowed to hit our API?
-    origins: "*",
-    # origins: [
-    #   "http://localhost:3000",
-    #   "http://localhost:4000",
-    #   "https://taro-chat-v1.herokuapp.com",
-    #   ~r{^https?://(.*.?)papercups.io$}
-    # ],
-    allow_credentials: true,
-    allow_headers: ["Content-Type", "Authorization"],
-    log: [rejected: :error, invalid: :warn, accepted: :debug]
-  )
 
   plug(ChatApiWeb.Router)
 end
