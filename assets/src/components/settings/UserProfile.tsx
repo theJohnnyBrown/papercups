@@ -18,12 +18,15 @@ import * as API from '../../api';
 import logger from '../../logger';
 import {PersonalGmailAuthorizationButton} from '../integrations/GoogleAuthorizationButton';
 
+const { TextArea } = Input;
+
 type Props = RouteComponentProps<{}> & {};
 type State = {
   email: string;
   fullName: string;
   displayName: string;
   profilePhotoUrl: string;
+  prompt: string;
   shouldEmailOnNewMessages: boolean;
   shouldEmailOnNewConversations: boolean;
   personalGmailAuthorization: any | null;
@@ -39,6 +42,7 @@ class UserProfile extends React.Component<Props, State> {
     fullName: '',
     displayName: '',
     profilePhotoUrl: '',
+    prompt: '',
     shouldEmailOnNewMessages: false,
     shouldEmailOnNewConversations: false,
     personalGmailAuthorization: null,
@@ -103,6 +107,7 @@ class UserProfile extends React.Component<Props, State> {
         display_name: displayName,
         full_name: fullName,
         profile_photo_url: profilePhotoUrl,
+        prompt,
       } = profile;
 
       this.setState({
@@ -110,6 +115,7 @@ class UserProfile extends React.Component<Props, State> {
         displayName,
         fullName,
         profilePhotoUrl,
+        prompt,
       });
     } else {
       // NB: this also handles resetting these values if the optimistic update fails
@@ -118,6 +124,7 @@ class UserProfile extends React.Component<Props, State> {
         displayName: '',
         fullName: '',
         profilePhotoUrl: '',
+        prompt: '',
       });
     }
   };
@@ -170,6 +177,10 @@ class UserProfile extends React.Component<Props, State> {
     this.setState({profilePhotoUrl: e.target.value});
   };
 
+  handleChangePrompt = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    this.setState({prompt: e.target.value});
+  };
+
   handleCancel = async () => {
     return this.fetchLatestProfile().then(() =>
       this.setState({isEditing: false})
@@ -177,12 +188,13 @@ class UserProfile extends React.Component<Props, State> {
   };
 
   handleUpdate = async () => {
-    const {displayName, fullName, profilePhotoUrl} = this.state;
+    const {displayName, fullName, profilePhotoUrl, prompt} = this.state;
 
     return API.updateUserProfile({
       display_name: displayName,
       full_name: fullName,
       profile_photo_url: profilePhotoUrl,
+      prompt: prompt,
     })
       .then((profile) => {
         logger.debug('Successfully updated profile!', profile);
@@ -238,6 +250,7 @@ class UserProfile extends React.Component<Props, State> {
       fullName,
       displayName,
       profilePhotoUrl,
+      prompt,
       personalGmailAuthorization,
       shouldEmailOnNewMessages,
       shouldEmailOnNewConversations,
@@ -322,6 +335,18 @@ class UserProfile extends React.Component<Props, State> {
             }}
           />
         </Flex>
+
+        <Box mb={3} sx={{maxWidth: 480}}>
+          <label htmlFor="prompt">Prompt:</label>
+          <TextArea
+            id="prompt"
+            value={prompt}
+            onChange={this.handleChangePrompt}
+            placeholder="Prompt message"
+            rows={4}
+            disabled={!isEditing}
+          />
+        </Box>
 
         {isEditing ? (
           <Flex>
